@@ -100,7 +100,8 @@ require("lazy").setup({
 			require('llm-sidekick').setup({
 				-- Model aliases configuration
 				aliases = {
-					sonnet = "anthropic.claude-3-5-sonnet-20241022-v2:0",
+          sonnet = "claude-3-5-sonnet-latest",
+					bedrock_sonnet = "anthropic.claude-3-5-sonnet-20241022-v2:0",
 				},
 				default = "sonnet",
 			})
