@@ -1,1 +1,6 @@
 export LLM_SIDEKICK_ANTHROPIC_API_KEY=
+
+# Used with bin/rails credentials:edit
+export BUNDLER_EDITOR=nvim
+export EDITOR=nvim
+
