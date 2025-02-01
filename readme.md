@@ -11,7 +11,7 @@ Now it's time to learn/rediscover the better ways to dev, one tool at a time.
 ## Getting started
 
 ```
-brew install neovim
+brew install neovim lazygit
 ```
 
 ## **Use Symlinks to Link Configurations**
