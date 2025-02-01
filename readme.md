@@ -2,7 +2,7 @@
 
 At one point I used macvim. Then I swapped back to vscode for standardization reasons. Then I used tmux for a bit and docker'd before docker was a thing.
 
-I decided it'd be good for me to continually focus and iterate on my development environment. Tinkering, for it's own sake.
+After some years of stagnation, I decided it'd be good for me to continually focus and iterate on my development environment. Tinkering, for it's own sake.
 
 So at the start of 2025, I moved to neovim. 
 
