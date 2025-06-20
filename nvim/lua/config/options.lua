@@ -42,7 +42,7 @@ vim.opt.softtabstop = 2
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1
 
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>pv", vim.cmd.Explore)
 
 -- Open lsp error messages & make them focusable
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, {desc = 'Open diagnostic float'})
@@ -59,16 +59,26 @@ vim.keymap.set('v', '<leader>/', '<ESC><cmd>lua require("Comment.api").toggle.li
 
 
 -- Ask LLM about code
-vim.keymap.set('n', '<leader>la', '<cmd>Ask split %<CR>', { noremap = true, desc = "Ask LLM about current buffer" })
-vim.keymap.set('v', '<leader>la', '<cmd>Ask split<CR>', { noremap = true, desc = "Ask LLM about selection" })
+vim.keymap.set('n', '<leader>lc', '<cmd>Chat vsplit %<CR>', { noremap = true, desc = "Chat with the current buffer" })
+vim.keymap.set('v', '<leader>lc', '<cmd>Chat vsplit<CR>', { noremap = true, desc = "Chat with selected code" })
+vim.keymap.set('n', '<leader>ld', '<cmd>Chat vsplit %:h<CR>', { noremap = true, desc = "Chat with the current directory" })
 
--- Code with LLM
-vim.keymap.set('n', '<leader>lc', '<cmd>Code split %<CR>', { noremap = true, desc = "Start coding with LLM on current buffer" })
-vim.keymap.set('v', '<leader>lc', '<cmd>Code split<CR>', { noremap = true, desc = "Start coding with LLM on selection" })
-vim.keymap.set('n', '<leader>ld', '<cmd>Code split %:h<CR>', { noremap = true, desc = "Start coding with LLM on files in current directory" })
+-- Only set <C-a> mappings if not in telescope buffer
+local function set_add_keymap()
+  local opts = { noremap = true, silent = true }
+  -- Check if current buffer is not a telescope prompt
+  if vim.bo.filetype ~= "TelescopePrompt" and vim.bo.filetype ~= "oil" then
+    vim.keymap.set('n', '<C-a>', ':Add<CR>', vim.tbl_extend('force', opts, { desc = "Add context to LLM" }))
+    vim.keymap.set('v', '<C-a>', ':Add<CR>', vim.tbl_extend('force', opts, { desc = "Add selected context to LLM" }))
+  end
+end
 
--- Apply LLM changes
-vim.keymap.set('n', '<leader>lp', '<cmd>Apply all<CR>', { noremap = true, desc = "Apply all LLM changes" })
+-- Set up an autocmd to run when entering buffers
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+  callback = function()
+    set_add_keymap()
+  end,
+})
 
 -- Add context to LLM
 vim.keymap.set('n', '<leader>ad', '<cmd>Add<CR>', { noremap = true, desc = "Add context to LLM" })
@@ -76,10 +86,6 @@ vim.keymap.set('v', '<leader>ad', '<cmd>Add<CR>', { noremap = true, desc = "Add 
 
 -- Speech to text
 vim.keymap.set('i', '<C-o>', '<cmd>Stt<CR>', { noremap = true, silent = true, desc = "Speech to text" })
-
--- Fast coding with Yolo mode
-vim.keymap.set('n', '<leader>ly', '<cmd>Yolo split %<CR>', { noremap = true, desc = "Fast coding with LLM on current buffer. Automatically applies changes and closes the chat buffer" })
-vim.keymap.set('v', '<leader>ly', '<cmd>Yolo split<CR>', { noremap = true, desc = "Fast coding with LLM on selection. Automatically applies changes and closes the chat buffer" })
 
 vim.keymap.set("n", "<leader>cf", function()
     local relative_path = vim.fn.expand('%:~:.')
@@ -95,3 +101,13 @@ vim.keymap.set('n', '<C-k>', '<C-w>k', { silent = true, desc = "Navigate to top 
 vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true, desc = "Navigate to right window" })
 
 vim.keymap.set("n", "<leader>pb", "<cmd>Telescope buffers<CR>", { desc = "Find buffers" })
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 6
+vim.opt.foldnestmax = 4
+
+
+vim.api.nvim_create_user_command('W', 'w', {})
