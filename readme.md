@@ -21,6 +21,7 @@ I've gone through various setups over the years (macvim → VSCode → tmux), an
 
 ```bash
 brew install neovim lazygit direnv
+brew install sox # speech to text
 ```
 
 ### 2. Configuration Setup

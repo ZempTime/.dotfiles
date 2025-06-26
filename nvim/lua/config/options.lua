@@ -42,7 +42,7 @@ vim.opt.softtabstop = 2
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1
 
-vim.keymap.set("n", "<leader>pv", vim.cmd.Explore)
+vim.keymap.set("n", "<leader>pv", ":Oil<CR>")
 
 -- Open lsp error messages & make them focusable
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, {desc = 'Open diagnostic float'})
