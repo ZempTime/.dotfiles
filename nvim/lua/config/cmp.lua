@@ -42,3 +42,5 @@ cmp.setup.cmdline(":", {
     { name = "cmdline" },
   }),
 })
+
+vim.api.nvim_set_keymap('i', '<C-o>', '<cmd>Stt<CR>', { noremap = true, silent = true, desc = "Speech to text" })
