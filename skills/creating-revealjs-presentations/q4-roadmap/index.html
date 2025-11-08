@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aha! Q4 Product Roadmap</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.1/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.1/theme/night.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+        }
+        .reveal h1, .reveal h2 {
+            color: #4FD1C5 !important; /* Tailwind teal-400 */
+        }
+        .product-icon {
+            max-width: 100px;
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section data-transition="zoom" data-background-transition="slide">
+                <h1 class="tw-text-5xl tw-text-center">Aha! Q4 Product Roadmap</h1>
+                <p class="tw-text-2xl tw-text-center tw-text-gray-300">Transforming Product Management</p>
+                <img src="https://aha.io/logo.png" alt="Aha! Logo" class="tw-mx-auto tw-w-1/3 tw-my-8">
+                <aside class="notes">
+                    Welcome to our exciting Q4 roadmap presentation. We're going to showcase how Aha! is revolutionizing product management.
+                </aside>
+            </section>
+
+            <section data-transition="convex">
+                <h2>Our Product Suite</h2>
+                <div class="tw-grid tw-grid-cols-3 tw-gap-4">
+                    <div class="tw-text-center">
+                        <img src="roadmaps-icon.png" alt="Roadmaps" class="product-icon">
+                        <h3>Roadmaps</h3>
+                    </div>
+                    <div class="tw-text-center">
+                        <img src="discovery-icon.png" alt="Discovery" class="product-icon">
+                        <h3>Discovery</h3>
+                    </div>
+                    <div class="tw-text-center">
+                        <img src="ideas-icon.png" alt="Ideas" class="product-icon">
+                        <h3>Ideas</h3>
+                    </div>
+                </div>
+                <aside class="notes">
+                    We'll be enhancing our core products: Roadmaps, Discovery, and Ideas with groundbreaking features.
+                </aside>
+            </section>
+
+            <section data-transition="slide">
+                <section>
+                    <h2>Q4 Focus: AI-Powered Insights</h2>
+                    <ul>
+                        <li class="fragment fade-in">Enhanced machine learning algorithms</li>
+                        <li class="fragment fade-in">Predictive prioritization</li>
+                        <li class="fragment fade-in">Natural language processing for ideas</li>
+                    </ul>
+                    <aside class="notes">
+                        Our AI capabilities will transform how teams make product decisions.
+                    </aside>
+                </section>
+                <section data-transition="zoom">
+                    <h2>AI Integration Roadmap</h2>
+                    <div class="tw-flex tw-justify-between">
+                        <div class="tw-w-1/3 tw-p-4 tw-bg-gray-800 tw-rounded">
+                            <h3>October</h3>
+                            <p>ML Model Training</p>
+                        </div>
+                        <div class="tw-w-1/3 tw-p-4 tw-bg-gray-700 tw-rounded">
+                            <h3>November</h3>
+                            <p>Beta Testing</p>
+                        </div>
+                        <div class="tw-w-1/3 tw-p-4 tw-bg-gray-600 tw-rounded">
+                            <h3>December</h3>
+                            <p>Full Rollout</p>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        Phased rollout of our AI capabilities across the platform.
+                    </aside>
+                </section>
+            </section>
+
+            <section data-transition="convex" data-background-color="#2C3E50">
+                <h2>Key Performance Metrics</h2>
+                <canvas id="performanceChart" width="600" height="400"></canvas>
+                <aside class="notes">
+                    Projected growth and performance improvements for Q4.
+                </aside>
+            </section>
+
+            <section data-transition="zoom">
+                <h2>Customer Impact</h2>
+                <blockquote class="tw-bg-gray-800 tw-p-6 tw-rounded tw-italic">
+                    "Aha! is transforming how we manage and execute our product strategy."
+                    <footer class="tw-text-right">- Tech Innovation Leader</footer>
+                </blockquote>
+                <aside class="notes">
+                    Real-world validation of our product direction.
+                </aside>
+            </section>
+
+            <section data-transition="slide">
+                <h1 class="tw-text-center">Questions?</h1>
+                <p class="tw-text-center tw-text-gray-300">Let's shape the future of product management together.</p>
+                <aside class="notes">
+                    Open for discussion, excited to hear your thoughts and feedback.
+                </aside>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script>
+        Reveal.initialize({
+            transition: 'slide',
+            transitionSpeed: 'fast',
+            plugins: [ RevealNotes ],
+            history: true,
+            progress: true,
+            controls: true,
+            center: true,
+            width: 1280,
+            height: 720
+        });
+
+        // Performance Chart
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Q3', 'Q4 Projected'],
+                datasets: [{
+                    label: 'Customer Satisfaction',
+                    data: [85, 95],
+                    backgroundColor: 'rgba(79, 209, 197, 0.6)'
+                }, {
+                    label: 'Feature Adoption',
+                    data: [60, 85],
+                    backgroundColor: 'rgba(134, 239, 172, 0.6)'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
