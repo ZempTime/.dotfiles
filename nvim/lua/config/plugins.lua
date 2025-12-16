@@ -91,7 +91,7 @@ require("lazy").setup({
     'stevearc/oil.nvim',
     ---@module 'oil'
     ---@type oil.SetupOpts
-    opts = { },
+    opts = {},
     -- Optional dependencies
     dependencies = { { "echasnovski/mini.icons", opts = {} } },
     -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
@@ -110,21 +110,17 @@ require("lazy").setup({
     config = function()
       require('llm-sidekick').setup({
         aliases = {
-          high = "o3-high",
-          medium = "o3-medium",
-          chatgpt = "gpt-4.1",
-          -- flash = "gemini-2.5-flash",
-          -- pro = "gemini-2.5-pro",
-          sonnet = "anthropic.claude-sonnet-4",
-          -- opus = "anthropic.claude-opus-4",
-          oldsonnet = "anthropic.claude-3-7-sonnet",        },
-        yolo_mode = {
-          file_operations = false,          -- Automatically accept file operations
-          terminal_commands = false,        -- Automatically accept terminal commands
-          auto_commit_changes = false,      -- Enable auto-commit
+          pro = "vertex_ai/gemini-2.5-pro",
+          opus = "vertex_ai/claude-opus-4",
+          sonnet = "vertex_ai/claude-sonnet-4",
         },
-        auto_commit_model = "gpt-4.1-mini", -- Use a specific model for commit messages
-        default = "sonnet",
+        {
+          file_operations = false,              -- Automatically accept file operations
+          terminal_commands = false,            -- Automatically accept terminal commands
+          auto_commit_changes = false,          -- Enable auto-commit
+        },
+        auto_commit_model = "gemini-2.0-flash", -- Use a specific model for commit messagesdefault = "sonnet",
+        default = 'sonnet',
         safe_terminal_commands = {
           "bin/bundle", "bundle", "bin/rspec", "rspec", "bin/rails", "rails", "bin/rake", "rake",
           "git commit", "mkdir", "touch",
@@ -134,10 +130,30 @@ Feel free to use any terminal tools - I have `fd`, `rg`, `gh`, `jq`, `aws` insta
       })
     end,
   },
-  --	{
-  --		"christoomey/vim-tmux-navigator",
-  --		lazy = false,
-  --	},
+  {
+    "christoomey/vim-tmux-navigator",
+    lazy = false,
+  },
+  {
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    opts = {
+      formatters_by_ft = {
+        javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+        typescript = { "prettierd", "prettier", stop_after_first = true },
+        typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+        json = { "prettierd", "prettier", stop_after_first = true },
+        css = { "prettierd", "prettier", stop_after_first = true },
+        html = { "prettierd", "prettier", stop_after_first = true },
+        markdown = { "prettierd", "prettier", stop_after_first = true },
+      },
+      default_format_opts = {
+        lsp_format = "fallback",
+      },
+    },
+  },
 
   -- Automatically check for plugin updates
   checker = { enabled = true },

@@ -1,0 +1,17 @@
+{
+  "env": {
+    "DISABLE_BUG_COMMAND": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_TELEMETRY": "1",
+    "CLAUDE_CODE_USE_VERTEX": "1",
+    "CLOUD_ML_REGION": "us-east5",
+    "ANTHROPIC_VERTEX_PROJECT_ID": "YOUR_PROJECT_ID_HERE",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5@20251001"
+  },
+  "model": "claude-opus-4-5@20251101",
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true,
+    "episodic-memory@superpowers-marketplace": true
+  },
+  "alwaysThinkingEnabled": true
+}

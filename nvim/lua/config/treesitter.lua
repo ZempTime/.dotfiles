@@ -2,7 +2,7 @@ local disabled_langs = { "ruby" }
 
 require("nvim-treesitter.configs").setup {
   -- A list of parser names, or "all"
-  ensure_installed = { "vimdoc", "query", "html", "ruby", "lua", "bash", "python", "comment", "dockerfile", "gitattributes", "gitignore", "graphql", "hcl", "javascript", "jsdoc", "json", "make", "markdown", "proto", "scss", "sql", "toml", "tsx", "typescript", "vim", "yaml", "dart" },
+  ensure_installed = { "vimdoc", "query", "html", "ruby", "lua", "bash", "python", "comment", "dockerfile", "gitattributes", "gitignore", "graphql", "hcl", "javascript", "jsdoc", "json", "make", "markdown", "proto", "scss", "sql", "toml", "tsx", "typescript", "vim", "yaml", "dart", "prolog" },
   highlight = {
     enable = true,
     disable = function(lang, buf)
@@ -64,6 +64,6 @@ require("nvim-treesitter.configs").setup {
   },
   matchup = {
     enable = true, -- mandatory, false will disable the whole extension
-    disable = {}, -- optional, list of language that will be disabled
+    disable = {},  -- optional, list of language that will be disabled
   },
 }

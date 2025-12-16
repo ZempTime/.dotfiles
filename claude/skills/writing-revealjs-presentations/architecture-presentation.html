@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aha! Architecture Overview</title>
+    <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.5.0/dist/reset.css">
+    <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.5.0/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <style>
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+        }
+        .reveal .slides {
+            text-align: left;
+        }
+        .reveal .slide-background {
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Title Slide -->
+            <section>
+                <h1 class="text-4xl font-bold">Aha! Architecture Overview</h1>
+                <p class="text-xl">A Comprehensive System Architecture</p>
+            </section>
+
+            <!-- Architectural Components Slide with Vertical Subslides -->
+            <section>
+                <section>
+                    <h2 class="text-3xl font-semibold">Architectural Landscape</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <h3 class="text-xl">Microservices</h3>
+                            <ul>
+                                <li>15 Microservices</li>
+                                <li>Modular, Scalable Architecture</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl">Database Ecosystem</h3>
+                            <ul>
+                                <li>3 Database Types</li>
+                                <li>Polyglot Persistence</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Microservices Subslide -->
+                <section>
+                    <h2 class="text-3xl font-semibold">Microservices Breakdown</h2>
+                    <div class="text-sm grid grid-cols-3 gap-2">
+                        <div>
+                            <h3>Core Services</h3>
+                            <ul>
+                                <li>User Management</li>
+                                <li>Authentication</li>
+                                <li>Workspace Management</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Product Services</h3>
+                            <ul>
+                                <li>Roadmaps</li>
+                                <li>Discovery</li>
+                                <li>Ideas Management</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Supporting Services</h3>
+                            <ul>
+                                <li>Notifications</li>
+                                <li>Reporting</li>
+                                <li>Analytics</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Database and Integration Subslide -->
+                <section>
+                    <h2 class="text-3xl font-semibold">Database & Integration Landscape</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <h3 class="text-xl">Database Types</h3>
+                            <ul>
+                                <li>PostgreSQL (Primary)</li>
+                                <li>Redis (Caching)</li>
+                                <li>OpenSearch (Full-text)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl">Integration Points</h3>
+                            <ul>
+                                <li>External APIs</li>
+                                <li>Third-party Tools</li>
+                                <li>Customer Platforms</li>
+                                <li>Webhook Endpoints</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Deployment and Security Slide -->
+            <section>
+                <h2 class="text-3xl font-semibold">Deployment & Security Model</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <h3 class="text-xl">Deployment Environments</h3>
+                        <ol>
+                            <li>Local Development</li>
+                            <li>Staging</li>
+                            <li>QA</li>
+                            <li>Pre-Production</li>
+                            <li>Production</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h3 class="text-xl">Security Layers</h3>
+                        <ol>
+                            <li>Network Security</li>
+                            <li>Authentication</li>
+                            <li>Authorization</li>
+                            <li>Data Encryption</li>
+                            <li>Audit Logging</li>
+                            <li>Compliance Monitoring</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Closing Slide -->
+            <section>
+                <h2 class="text-3xl font-bold">Questions?</h2>
+                <p class="text-xl">Robust. Scalable. Secure.</p>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/reveal.js@4.5.0/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            plugins: []
+        });
+    </script>
+</body>
+</html>

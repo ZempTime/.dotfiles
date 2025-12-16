@@ -87,18 +87,58 @@ vim.keymap.set('v', '<leader>ad', '<cmd>Add<CR>', { noremap = true, desc = "Add 
 -- Speech to text
 vim.keymap.set('i', '<C-o>', '<cmd>Stt<CR>', { noremap = true, silent = true, desc = "Speech to text" })
 
+-- Copy @file reference (normal mode - no line number)
 vim.keymap.set("n", "<leader>cf", function()
-    local relative_path = vim.fn.expand('%:~:.')
-    vim.fn.setreg('+', relative_path)
-    vim.notify('Copied: ' .. relative_path)
-end, { desc = "Copy relative file path to clipboard" })
+  local file = vim.fn.expand('%:~:.')
+  local ref = '@' .. file
+  vim.fn.setreg('+', ref)
+  vim.notify('Copied: ' .. ref)
+end, { desc = "Copy @file reference" })
 
+-- Copy @file:lines reference (visual mode - only if multiple lines)
+vim.keymap.set("v", "<leader>cf", function()
+  local start_line = vim.fn.line("'<")
+  local end_line = vim.fn.line("'>")
+  local file = vim.fn.expand('%:~:.')
 
--- Navigate windows with Ctrl + hjkl
-vim.keymap.set('n', '<C-h>', '<C-w>h', { silent = true, desc = "Navigate to left window" })
-vim.keymap.set('n', '<C-j>', '<C-w>j', { silent = true, desc = "Navigate to bottom window" })
-vim.keymap.set('n', '<C-k>', '<C-w>k', { silent = true, desc = "Navigate to top window" })
-vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true, desc = "Navigate to right window" })
+  local ref
+  if start_line == end_line then
+    ref = '@' .. file
+  else
+    ref = string.format('@%s:%d-%d', file, start_line, end_line)
+  end
+
+  vim.fn.setreg('+', ref)
+  vim.notify('Copied: ' .. ref)
+end, { desc = "Copy @file:lines reference" })
+
+-- Send @file:lines reference to right tmux pane (Claude)
+vim.keymap.set("v", "<leader>tc", function()
+  local start_line = vim.fn.line("'<")
+  local end_line = vim.fn.line("'>")
+  local file = vim.fn.expand('%:~:.')
+
+  local ref
+  if start_line == end_line then
+    ref = '@' .. file
+  else
+    ref = string.format('@%s:%d-%d', file, start_line, end_line)
+  end
+
+  vim.fn.system({'tmux', 'send-keys', '-t', '{right}', ref})
+  vim.notify('Sent to Claude: ' .. ref)
+end, { desc = "Send @file:lines to Claude pane" })
+
+-- Send @file to right tmux pane (normal mode)
+vim.keymap.set("n", "<leader>tc", function()
+  local file = vim.fn.expand('%:~:.')
+  local ref = '@' .. file
+  vim.fn.system({'tmux', 'send-keys', '-t', '{right}', ref})
+  vim.notify('Sent to Claude: ' .. ref)
+end, { desc = "Send @file to Claude pane" })
+
+-- Window navigation handled by vim-tmux-navigator plugin
+-- (seamlessly navigates between Neovim splits AND tmux panes with C-h/j/k/l)
 
 vim.keymap.set("n", "<leader>pb", "<cmd>Telescope buffers<CR>", { desc = "Find buffers" })
 

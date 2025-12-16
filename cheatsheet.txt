@@ -1,0 +1,210 @@
+═══════════════════════════════════════════════════════════════════════════════
+                            DEVELOPMENT CHEATSHEET
+═══════════════════════════════════════════════════════════════════════════════
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  NEOVIM KEYBINDINGS                                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+  Navigation (seamless with tmux)
+  ───────────────────────────────
+  C-h/j/k/l         Navigate between splits AND tmux panes
+
+  File References (for Claude)
+  ────────────────────────────
+  <leader>cf        [n] Copy @file to clipboard
+  <leader>cf        [v] Copy @file:startLine-endLine (multi-line only)
+  <leader>tc        [n] Send @file to right tmux pane (Claude)
+  <leader>tc        [v] Send @file:lines to right tmux pane (multi-line only)
+
+  LSP
+  ───
+  gd                Go to definition
+  gr                Go to references
+  gi                Go to implementation
+  gt                Go to type definition
+  K                 Hover documentation
+  gs                Signature help
+  <leader>o         Document symbols
+  <leader>e         Show diagnostic float
+  <leader>rn        Rename symbol
+  <leader>f         Format (Prettier → LSP fallback)
+  [e / ]e           Previous/next diagnostic
+
+  File Explorer
+  ─────────────
+  <leader>pv        Open Oil file explorer
+  <leader>pb        Find buffers (Telescope)
+
+  Git
+  ───
+  <leader>lg        Open LazyGit
+
+  LLM (llm-sidekick)
+  ──────────────────
+  <leader>lc        [n] Chat with current buffer
+  <leader>lc        [v] Chat with selected code
+  <leader>ld        Chat with current directory
+  <leader>ad        Add context to LLM
+  C-a               Add context (in normal buffers)
+  C-o               [i] Speech to text
+
+  Other
+  ─────
+  <leader>u         Toggle UndoTree
+  <leader>/         Toggle comment
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  TMUX KEYBINDINGS                                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+  Prefix: C-Space (Ctrl+Space)
+
+  Pane Management
+  ───────────────
+  C-Space |         Split pane horizontally (side by side)
+  C-Space -         Split pane vertically (top/bottom)
+  C-Space q         Kill pane
+  C-Space z         Zoom/unzoom pane (toggle fullscreen)
+  C-h/j/k/l         Navigate panes (seamless with Neovim)
+  C-Space H/J/K/L   Resize pane (repeatable)
+
+  Window Management
+  ─────────────────
+  C-Space c         New window
+  C-Space 1-9       Jump to window by number
+  M-H               Previous window (Alt+Shift+H)
+  M-L               Next window (Alt+Shift+L)
+
+  Session Management
+  ──────────────────
+  C-Space d         Detach from session
+  C-Space r         Reload tmux config
+  C-Space I         Install plugins (TPM)
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  TMUX SESSIONS - Mental Model                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+  What is a session?
+  ──────────────────
+  A session = a complete workspace that persists even when you close terminal.
+
+  Think of it like this:
+    Session  →  "I'm working on project X"
+    Window   →  "I'm doing task Y within project X" (like browser tabs)
+    Pane     →  "I need to see thing A and thing B side by side"
+
+  When to create a new session
+  ────────────────────────────
+  ✓ Different project (aha-app vs aha-gatsby)
+  ✓ Different context (dev work vs server monitoring)
+  ✓ Long-running task you want to preserve
+
+  When to use windows instead
+  ───────────────────────────
+  ✓ Same project, different tasks (code | tests | logs)
+  ✓ Things you switch between frequently
+
+  Daily Workflow
+  ──────────────
+  Morning:
+    tmux ls                     # See what's running
+    tmux attach -t aha-app      # Resume where you left off
+
+  Starting fresh:
+    tmux new -s aha-app         # New session for project
+
+  Switching projects:
+    C-Space d                   # Detach current session
+    tmux attach -t other        # Attach to other session
+
+  End of day:
+    C-Space d                   # Just detach - everything stays running
+    # OR close terminal - sessions survive!
+
+  Commands Reference
+  ──────────────────
+  tmux                    Start unnamed session
+  tmux new -s NAME        Start named session
+  tmux ls                 List all sessions
+  tmux attach             Attach to last session
+  tmux attach -t NAME     Attach to specific session
+  tmux kill-session -t X  Kill session X
+  tmux kill-server        Kill ALL sessions (nuclear option)
+
+  Inside tmux:
+  C-Space d               Detach (session keeps running)
+  C-Space $               Rename current session
+  C-Space s               List sessions (interactive picker)
+  C-Space (               Switch to previous session
+  C-Space )               Switch to next session
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  CLAUDE WORKFLOW                                                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+  Typical Setup:
+  ┌───────────────────────┬──────────────────────┐
+  │       Neovim          │       Claude         │
+  │       (code)          │       (chat)         │
+  └───────────────────────┴──────────────────────┘
+
+  1. C-Space |          Split pane for Claude
+  2. Run `claude`       Start Claude in right pane
+  3. Select code        In Neovim, visually select lines
+  4. <leader>tc         Send @file:lines reference to Claude
+  5. C-h / C-l          Move between panes seamlessly
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  MISE (Runtime Version Manager)                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+  mise ls             List installed tools
+  mise use -g X@Y     Set global version (e.g., mise use -g ruby@3.3.4)
+  mise install X      Install tool
+  mise current        Show active versions
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  CLI TOOLS                                                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+  Search & Find
+  ─────────────
+  fd PATTERN          Fast find (better than find)
+  fd -e rb PATTERN    Find with extension filter
+  rg PATTERN          Fast grep (ripgrep)
+  rg -t ruby PATTERN  Grep with file type filter
+  ast-grep -p 'PAT'   AST-based code search
+
+  GitHub CLI
+  ──────────
+  gh pr list          List pull requests
+  gh pr create        Create pull request
+  gh pr checkout N    Checkout PR #N
+  gh issue list       List issues
+
+  JSON Processing
+  ────────────────
+  jq .                Pretty print JSON
+  jq '.key'           Extract key from JSON
+  cat file | jq .     Pipe JSON through jq
+
+  Python (uv)
+  ───────────
+  uv pip install X    Fast pip install
+  uv venv             Create virtualenv
+  uv run script.py    Run with dependencies
+
+  Environment
+  ───────────
+  direnv allow        Allow .envrc in current dir
+  direnv deny         Deny .envrc
+
+
+═══════════════════════════════════════════════════════════════════════════════

@@ -1,1 +1,4 @@
 direnv/direnvrc
+.DS_Store
+**/.DS_Store
+claude/settings.json

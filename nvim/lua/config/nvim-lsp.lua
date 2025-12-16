@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('<leader>e', vim.diagnostic.open_float)
     map('<leader>rn', vim.lsp.buf.rename)
     map('<leader>f', function()
-      vim.lsp.buf.format { timeout_ms = 4000, bufnr = event.buf }
+      require("conform").format({ async = true, lsp_fallback = true })
     end)
 
     if client.server_capabilities.documentHighlightProvider then
