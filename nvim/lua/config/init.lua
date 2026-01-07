@@ -1,7 +1,4 @@
 require("config.options")
 require("config.plugins")
-require("config.treesitter")
-require("config.telescope")
 require("config.nvim-lsp")
 require("config.cmp")
-require("gitlinker").setup()

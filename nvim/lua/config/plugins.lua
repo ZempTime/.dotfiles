@@ -21,7 +21,12 @@ require("lazy").setup({
   "williamboman/mason.nvim",
   "williamboman/mason-lspconfig.nvim",
   "neovim/nvim-lspconfig",
-  "ruifm/gitlinker.nvim",
+  {
+    "ruifm/gitlinker.nvim",
+    config = function()
+      require("gitlinker").setup()
+    end,
+  },
   "hrsh7th/nvim-cmp",
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-nvim-lua",
@@ -30,9 +35,73 @@ require("lazy").setup({
   "hrsh7th/cmp-cmdline",
   "hrsh7th/cmp-nvim-lsp-signature-help",
   "b0o/schemastore.nvim",
-  { "nvim-treesitter/nvim-treesitter",          build = ":TSUpdate" },
-  "nvim-treesitter/nvim-treesitter-context",
-  "nvim-treesitter/nvim-treesitter-textobjects",
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      local parsers = { "vimdoc", "query", "html", "ruby", "lua", "bash", "python", "comment", "dockerfile", "gitattributes", "gitignore", "graphql", "hcl", "javascript", "jsdoc", "json", "make", "markdown", "proto", "scss", "sql", "toml", "tsx", "typescript", "vim", "yaml", "dart", "prolog" }
+      require("nvim-treesitter").install(parsers)
+
+      -- Enable treesitter highlighting for all filetypes except ruby (slow)
+      local disabled_langs = { ruby = true }
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+          local ft = vim.bo[args.buf].filetype
+          if not disabled_langs[ft] then
+            local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(args.buf))
+            if not ok or not stats or stats.size < 100 * 1024 then
+              pcall(vim.treesitter.start, args.buf)
+            end
+          end
+        end,
+      })
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    event = "VeryLazy",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
+    event = "VeryLazy",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("nvim-treesitter-textobjects").setup({
+        select = {
+          lookahead = true,
+          selection_modes = {
+            ["@function.outer"] = "V",
+            ["@class.outer"] = "V",
+            ["@block.outer"] = "V",
+          },
+        },
+        move = {
+          set_jumps = true,
+        },
+      })
+
+      local select = require("nvim-treesitter-textobjects.select").select_textobject
+      local move = require("nvim-treesitter-textobjects.move")
+
+      -- Select keymaps
+      vim.keymap.set({ "x", "o" }, "af", function() select("@function.outer", "textobjects") end)
+      vim.keymap.set({ "x", "o" }, "if", function() select("@function.inner", "textobjects") end)
+      vim.keymap.set({ "x", "o" }, "ac", function() select("@class.outer", "textobjects") end)
+      vim.keymap.set({ "x", "o" }, "ic", function() select("@class.inner", "textobjects") end)
+      vim.keymap.set({ "x", "o" }, "ab", function() select("@block.outer", "textobjects") end)
+      vim.keymap.set({ "x", "o" }, "ib", function() select("@block.inner", "textobjects") end)
+
+      -- Move keymaps
+      vim.keymap.set({ "n", "x", "o" }, "]f", function() move.goto_next_start("@function.outer", "textobjects") end)
+      vim.keymap.set({ "n", "x", "o" }, "[f", function() move.goto_previous_start("@function.outer", "textobjects") end)
+      vim.keymap.set({ "n", "x", "o" }, "]]", function() move.goto_next_start("@class.outer", "textobjects") end)
+      vim.keymap.set({ "n", "x", "o" }, "[[", function() move.goto_previous_start("@class.outer", "textobjects") end)
+    end,
+  },
   {
     "kdheepak/lazygit.nvim",
     lazy = true,
@@ -66,6 +135,14 @@ require("lazy").setup({
     "nvim-telescope/telescope.nvim",
     tag = "0.1.8",
     dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      local builtin = require("telescope.builtin")
+      vim.keymap.set("n", "<leader>pf", builtin.find_files, { desc = "Find files" })
+      vim.keymap.set("n", "<C-p>", builtin.git_files, { desc = "Git files" })
+      vim.keymap.set("n", "<leader>ps", function()
+        builtin.grep_string({ search = vim.fn.input("Grep > ") })
+      end, { desc = "Grep string" })
+    end,
   },
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
   "pangloss/vim-javascript",
@@ -154,10 +231,26 @@ Feel free to use any terminal tools - I have `fd`, `rg`, `gh`, `jq`, `aws` insta
       },
     },
   },
-
+  {
+    "stevearc/aerial.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {
+      layout = {
+        default_direction = "left",
+      },
+      link_folds_to_tree = true,
+      link_tree_to_folds = true,
+      manage_folds = true,
+    },
+    keys = {
+      { "<leader>la", "<cmd>AerialToggle<cr>", desc = "Toggle Aerial" },
+    },
+  },
+}, {
   -- Automatically check for plugin updates
   checker = { enabled = true },
   -- Colorscheme to use during setup
   install = { colorscheme = { "tokyonight" } },
-
 })

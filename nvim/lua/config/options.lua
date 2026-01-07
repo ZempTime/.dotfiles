@@ -144,9 +144,10 @@ vim.keymap.set("n", "<leader>pb", "<cmd>Telescope buffers<CR>", { desc = "Find b
 
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldenable = true
 
 vim.opt.foldlevel = 99
-vim.opt.foldlevelstart = 6
+vim.opt.foldlevelstart = 99
 vim.opt.foldnestmax = 4
 
 
