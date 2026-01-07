@@ -41,10 +41,8 @@ require("lazy").setup({
     lazy = false,
     priority = 1000,
     config = function()
-      local parsers = { "vimdoc", "query", "html", "ruby", "lua", "bash", "python", "comment", "dockerfile", "gitattributes", "gitignore", "graphql", "hcl", "javascript", "jsdoc", "json", "make", "markdown", "proto", "scss", "sql", "toml", "tsx", "typescript", "vim", "yaml", "dart", "prolog" }
-      require("nvim-treesitter").install(parsers)
-
       -- Enable treesitter highlighting for all filetypes except ruby (slow)
+      -- To install parsers: :TSInstall <parser> or require("nvim-treesitter").install({ "lua", "ruby", ... })
       local disabled_langs = { ruby = true }
       vim.api.nvim_create_autocmd("FileType", {
         callback = function(args)
