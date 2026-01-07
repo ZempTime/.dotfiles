@@ -11,7 +11,7 @@ key = "Space"
 mods = "Control"
 chars = "\u0000"
 
-# Shift+Enter for Claude Code (CSI u encoding)
+# Shift+Enter for Claude Code
 [[keyboard.bindings]]
 key = "Return"
 mods = "Shift"
